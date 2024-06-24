@@ -104,6 +104,10 @@ Example:
 And u will receive such output:
 ![изображение](https://github.com/CICADA8-Research/RemoteKrbRelay/assets/92790655/4f2f22c7-dd0a-4eef-a630-4cce0f9c55df)
 
+The columns will contain the DCOM object CLSIDs, names, and LaunchPermission and AccessPermission. 
+![изображение](https://github.com/CICADA8-Research/RemoteKrbRelay/assets/92790655/4d6d0876-f3ae-453e-9c26-e618f61bc71d)
+
+Try searching for sppui (CLSID {F87B28F1-DA9A-4F35-8EC0-800EFCF26B83}, APPID {0868DC9B-D9A2-4f64-9362-133CEA201299}) and CertSrv Request (CLSID { d99e6e74-fc88-11d0-b498-00a0c90312f3}) objects and understand why they are vulnerable.
 
 
 # TO DO LIST
