@@ -1,6 +1,25 @@
+
+                            /\_/\____,
+                  ,___/\_/\ \  ~     /
+                  \     ~  \ )   XXX
+                    XXX     /    /\_/\___,
+                       \o-o/-o-o/   ~    /
+                        ) /     \    XXX
+                       _|    / \ \_/
+                    ,-/   _  \_/   \
+                   / (   /____,__|  )
+                  (  |_ (    )  \) _|
+                 _/ _)   \   \__/   (_
+                (,-(,(,(,/      \,),),)
+
+                CICADA8 Research Team
+                From Michael Zhmaylo (MzHmO)
+
+
 # RemoteKrbRelay
 
 You probably know [KrbRelay](https://github.com/cube0x0/KrbRelay) and [KrbRelayUp](https://github.com/Dec0ne/KrbRelayUp), but what if I told you it could be done remotely? With RemoteKrbRelay this becomes a reality.
+
 
 # TL;DR
 
