@@ -111,6 +111,14 @@ Try searching for sppui (CLSID {F87B28F1-DA9A-4F35-8EC0-800EFCF26B83}, APPID {08
 
 Don't use Checker, use only Checkerv2.0 pls :3 
 
+## FindAvailablePort
+
+A small tool to discover a port on which to raise a malicious DCOM server. See details [here](https://googleprojectzero.blogspot.com/2021/10/windows-exploitation-tricks-relaying.html) (Remote -> Local Potato).
+
+![изображение](https://github.com/CICADA8-Research/RemoteKrbRelay/assets/92790655/c1edd59d-3a07-42ee-bc6e-6c724d7c10ff)
+
+Practice using the concept of a local port. Rewrite RemotePotato0 to a local port. Trust me, this is useful.
+
 ## Exploit
 I added quite a bit of different functionality to the exploit. Note that it provides enough functionality to abuse DCOM objects. I've also listed a few CLSIDs in Help for abuse. These CLSIDs were publicly known, there just wasn't a POC to abuse them. There are quite a few vulnerable DCOM objects, work with the checker and find them all!
 
