@@ -1,0 +1,399 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>System.DirectoryServices.Protocols</name>
+    </assembly>
+    <members>
+        <member name="P:System.SR.NoNegativeTimeLimit">
+            <summary>A negative value is not permitted for the time limit.</summary>
+        </member>
+        <member name="P:System.SR.NoNegativeSizeLimit">
+            <summary>A negative value is not permitted for the size limit.</summary>
+        </member>
+        <member name="P:System.SR.InvalidDocument">
+            <summary>The DSML document could not be parsed.</summary>
+        </member>
+        <member name="P:System.SR.MissingResponse">
+            <summary>The server failed to return a DirectoryResponse.</summary>
+        </member>
+        <member name="P:System.SR.ErrorResponse">
+            <summary>An ErrorResponse DSML element was returned.</summary>
+        </member>
+        <member name="P:System.SR.NullDirectoryAttribute">
+            <summary>A null reference cannot be added to DirectoryAttribute or DirectoryAttributeModification objects.</summary>
+        </member>
+        <member name="P:System.SR.NullDirectoryAttributeCollection">
+            <summary>A null reference cannot be added to DirectoryAttributeCollection or DirectoryAttributeModificationCollection objects.</summary>
+        </member>
+        <member name="P:System.SR.WhiteSpaceServerName">
+            <summary>Server names cannot contain a space character.</summary>
+        </member>
+        <member name="P:System.SR.DirectoryAttributeConversion">
+            <summary>A DirectoryAttribute value can only be converted between byte array and string.</summary>
+        </member>
+        <member name="P:System.SR.WrongNumValuesCompare">
+            <summary>Only one value can be specified for the compare operation.</summary>
+        </member>
+        <member name="P:System.SR.WrongAssertionCompare">
+            <summary>The assertion is null and is invalid for the compare operation.</summary>
+        </member>
+        <member name="P:System.SR.DefaultOperationsError">
+            <summary>An unspecified operation error occurred.</summary>
+        </member>
+        <member name="P:System.SR.ReadOnlyProperty">
+            <summary>The property is read-only.</summary>
+        </member>
+        <member name="P:System.SR.InvalidClientCertificates">
+            <summary>ClientCertificates can contain only zero or one certificate.</summary>
+        </member>
+        <member name="P:System.SR.InvalidAuthCredential">
+            <summary>The user name and password must be null when the authentication type is anonymous.</summary>
+        </member>
+        <member name="P:System.SR.InvalidLdapSearchRequestFilter">
+            <summary>The LDAP connection only accepts SearchRequest objects that have string type filters.</summary>
+        </member>
+        <member name="P:System.SR.PartialResultsNotSupported">
+            <summary>Retrieval of partial results set is supported only by the SearchRequest object.</summary>
+        </member>
+        <member name="P:System.SR.BerConverterNotMatch">
+            <summary>The "format" string argument and the passed in "value" argument do not match.</summary>
+        </member>
+        <member name="P:System.SR.BerConverterUndefineChar">
+            <summary>The "format" string contains an invalid character.</summary>
+        </member>
+        <member name="P:System.SR.BerConversionError">
+            <summary>An error occurred during the BER conversion.</summary>
+        </member>
+        <member name="P:System.SR.TLSStopFailure">
+            <summary>The Stop TLS operation failed.</summary>
+        </member>
+        <member name="P:System.SR.NoPartialResults">
+            <summary>The LDAP connection cannot retrieve a partial result set.</summary>
+        </member>
+        <member name="P:System.SR.DefaultLdapError">
+            <summary>The LDAP server returned an unknown error: {0}</summary>
+        </member>
+        <member name="P:System.SR.LDAP_PARTIAL_RESULTS">
+            <summary>Only partial results and referrals were received.</summary>
+        </member>
+        <member name="P:System.SR.LDAP_IS_LEAF">
+            <summary>The object is a leaf.</summary>
+        </member>
+        <member name="P:System.SR.LDAP_SORT_CONTROL_MISSING">
+            <summary>The search requires a SORT control.</summary>
+        </member>
+        <member name="P:System.SR.LDAP_OFFSET_RANGE_ERROR">
+            <summary>The search results exceed the specified offset range.</summary>
+        </member>
+        <member name="P:System.SR.LDAP_RESULTS_TOO_LARGE">
+            <summary>The returned results are too large.</summary>
+        </member>
+        <member name="P:System.SR.LDAP_SERVER_DOWN">
+            <summary>The LDAP server is unavailable.</summary>
+        </member>
+        <member name="P:System.SR.LDAP_LOCAL_ERROR">
+            <summary>A local error occurred.</summary>
+        </member>
+        <member name="P:System.SR.LDAP_ENCODING_ERROR">
+            <summary>An encoding error occurred.</summary>
+        </member>
+        <member name="P:System.SR.LDAP_DECODING_ERROR">
+            <summary>A decoding error occurred.</summary>
+        </member>
+        <member name="P:System.SR.LDAP_TIMEOUT">
+            <summary>The operation was aborted because the client side timeout limit was exceeded.</summary>
+        </member>
+        <member name="P:System.SR.LDAP_AUTH_UNKNOWN">
+            <summary>An unknown authentication error occurred.</summary>
+        </member>
+        <member name="P:System.SR.LDAP_FILTER_ERROR">
+            <summary>The search filter is invalid.</summary>
+        </member>
+        <member name="P:System.SR.LDAP_USER_CANCELLED">
+            <summary>The user cancelled the operation.</summary>
+        </member>
+        <member name="P:System.SR.LDAP_PARAM_ERROR">
+            <summary>A bad parameter was passed to a routine.</summary>
+        </member>
+        <member name="P:System.SR.LDAP_NO_MEMORY">
+            <summary>There is not enough memory to perform the task.</summary>
+        </member>
+        <member name="P:System.SR.LDAP_CONNECT_ERROR">
+            <summary>The connection cannot be established.</summary>
+        </member>
+        <member name="P:System.SR.LDAP_NOT_SUPPORTED">
+            <summary>The feature is not supported.</summary>
+        </member>
+        <member name="P:System.SR.LDAP_NO_RESULTS_RETURNED">
+            <summary>No results were returned.</summary>
+        </member>
+        <member name="P:System.SR.LDAP_CONTROL_NOT_FOUND">
+            <summary>The specified control was not found.</summary>
+        </member>
+        <member name="P:System.SR.LDAP_MORE_RESULTS_TO_RETURN">
+            <summary>More results will be returned.</summary>
+        </member>
+        <member name="P:System.SR.LDAP_CLIENT_LOOP">
+            <summary>A client loop was detected.</summary>
+        </member>
+        <member name="P:System.SR.LDAP_REFERRAL_LIMIT_EXCEEDED">
+            <summary>The referral limit has been exceeded.</summary>
+        </member>
+        <member name="P:System.SR.LDAP_INVALID_CREDENTIALS">
+            <summary>The supplied credential is invalid.</summary>
+        </member>
+        <member name="P:System.SR.LDAP_SUCCESS">
+            <summary>The call completed successfully.</summary>
+        </member>
+        <member name="P:System.SR.LDAP_OPERATIONS_ERROR">
+            <summary>An operation error occurred.</summary>
+        </member>
+        <member name="P:System.SR.LDAP_PROTOCOL_ERROR">
+            <summary>A protocol error occurred.</summary>
+        </member>
+        <member name="P:System.SR.LDAP_TIMELIMIT_EXCEEDED">
+            <summary>The time limit set by the server-side time limit parameter was exceeded.</summary>
+        </member>
+        <member name="P:System.SR.LDAP_SIZELIMIT_EXCEEDED">
+            <summary>The size limit was exceeded</summary>
+        </member>
+        <member name="P:System.SR.LDAP_COMPARE_FALSE">
+            <summary>The attribute and known values do not match.</summary>
+        </member>
+        <member name="P:System.SR.LDAP_COMPARE_TRUE">
+            <summary>The attribute and known values match.</summary>
+        </member>
+        <member name="P:System.SR.LDAP_AUTH_METHOD_NOT_SUPPORTED">
+            <summary>The authentication method is not supported.</summary>
+        </member>
+        <member name="P:System.SR.LDAP_STRONG_AUTH_REQUIRED">
+            <summary>Strong authentication is required for this operation.</summary>
+        </member>
+        <member name="P:System.SR.LDAP_REFERRAL">
+            <summary>A referral was returned from the server.</summary>
+        </member>
+        <member name="P:System.SR.LDAP_ADMIN_LIMIT_EXCEEDED">
+            <summary>The administration limit on the server was exceeded.</summary>
+        </member>
+        <member name="P:System.SR.LDAP_UNAVAILABLE_CRIT_EXTENSION">
+            <summary>The server does not support the control. The control is critical.</summary>
+        </member>
+        <member name="P:System.SR.LDAP_CONFIDENTIALITY_REQUIRED">
+            <summary>Confidentiality is required for this operation.</summary>
+        </member>
+        <member name="P:System.SR.LDAP_SASL_BIND_IN_PROGRESS">
+            <summary>A SASL bind is in progress.</summary>
+        </member>
+        <member name="P:System.SR.LDAP_NO_SUCH_ATTRIBUTE">
+            <summary>The requested attribute does not exist.</summary>
+        </member>
+        <member name="P:System.SR.LDAP_UNDEFINED_TYPE">
+            <summary>The type is not defined.</summary>
+        </member>
+        <member name="P:System.SR.LDAP_INAPPROPRIATE_MATCHING">
+            <summary>The matching rule does not apply to the specified attribute type.</summary>
+        </member>
+        <member name="P:System.SR.LDAP_CONSTRAINT_VIOLATION">
+            <summary>A value in the request is invalid.</summary>
+        </member>
+        <member name="P:System.SR.LDAP_ATTRIBUTE_OR_VALUE_EXISTS">
+            <summary>The attribute exists or the value has been assigned.</summary>
+        </member>
+        <member name="P:System.SR.LDAP_INVALID_SYNTAX">
+            <summary>The syntax is invalid.</summary>
+        </member>
+        <member name="P:System.SR.LDAP_NO_SUCH_OBJECT">
+            <summary>The object does not exist.</summary>
+        </member>
+        <member name="P:System.SR.LDAP_ALIAS_PROBLEM">
+            <summary>The alias is invalid.</summary>
+        </member>
+        <member name="P:System.SR.LDAP_INVALID_DN_SYNTAX">
+            <summary>The distinguished name contains invalid syntax.</summary>
+        </member>
+        <member name="P:System.SR.LDAP_ALIAS_DEREF_PROBLEM">
+            <summary>An error occurred when dereferencing the alias.</summary>
+        </member>
+        <member name="P:System.SR.LDAP_INAPPROPRIATE_AUTH">
+            <summary>The authentication that was provided was not appropriate.</summary>
+        </member>
+        <member name="P:System.SR.LDAP_INSUFFICIENT_RIGHTS">
+            <summary>The user has insufficient access rights.</summary>
+        </member>
+        <member name="P:System.SR.LDAP_BUSY">
+            <summary>The server is busy.</summary>
+        </member>
+        <member name="P:System.SR.LDAP_UNAVAILABLE">
+            <summary>The server is unavailable.</summary>
+        </member>
+        <member name="P:System.SR.LDAP_UNWILLING_TO_PERFORM">
+            <summary>The server cannot handle directory requests.</summary>
+        </member>
+        <member name="P:System.SR.LDAP_LOOP_DETECT">
+            <summary>The chain of referrals has looped back to a referring server.</summary>
+        </member>
+        <member name="P:System.SR.LDAP_NAMING_VIOLATION">
+            <summary>A naming violation occurred.</summary>
+        </member>
+        <member name="P:System.SR.LDAP_OBJECT_CLASS_VIOLATION">
+            <summary>An object class violation occurred.</summary>
+        </member>
+        <member name="P:System.SR.LDAP_NOT_ALLOWED_ON_NONLEAF">
+            <summary>This operation is not allowed on a non-leaf object.</summary>
+        </member>
+        <member name="P:System.SR.LDAP_NOT_ALLOWED_ON_RDN">
+            <summary>This operation is not allowed on a relative distinguished name.</summary>
+        </member>
+        <member name="P:System.SR.LDAP_ALREADY_EXISTS">
+            <summary>The object exists.</summary>
+        </member>
+        <member name="P:System.SR.LDAP_NO_OBJECT_CLASS_MODS">
+            <summary>The request is attempting to modify an object class that cannot be modified.</summary>
+        </member>
+        <member name="P:System.SR.LDAP_AFFECTS_MULTIPLE_DSAS">
+            <summary>Multiple directory service agents are affected.</summary>
+        </member>
+        <member name="P:System.SR.LDAP_VIRTUAL_LIST_VIEW_ERROR">
+            <summary>An error occurred when attempting to perform a requested Virtual List View operation.</summary>
+        </member>
+        <member name="P:System.SR.LDAP_OTHER">
+            <summary>An unknown error occurred.</summary>
+        </member>
+        <member name="P:System.SR.LDAP_SEND_TIMEOUT">
+            <summary>The operation was aborted because the send timeout limit was exceeded.</summary>
+        </member>
+        <member name="P:System.SR.InvalidAsyncResult">
+            <summary>The async result is invalid.</summary>
+        </member>
+        <member name="P:System.SR.ValidDirectoryAttributeType">
+            <summary>The "value" parameter must be a string or byte[] type.</summary>
+        </member>
+        <member name="P:System.SR.ValidFilterType">
+            <summary>The "filter" parameter must be a string or DsmlDocument type.</summary>
+        </member>
+        <member name="P:System.SR.ValidValuesType">
+            <summary>The "values" parameter must be a string[], byte[][], or Uri[] type.</summary>
+        </member>
+        <member name="P:System.SR.ValidValueType">
+            <summary>The value must be a string, byte[], or Uri type.</summary>
+        </member>
+        <member name="P:System.SR.InvalidValueType">
+            <summary>The specified parameter should be a "{0}" type.</summary>
+        </member>
+        <member name="P:System.SR.ValidValue">
+            <summary>The value must be greater than or equal to 0.</summary>
+        </member>
+        <member name="P:System.SR.ContainNullControl">
+            <summary>The collection cannot contain a null DirectoryControl object.</summary>
+        </member>
+        <member name="P:System.SR.NotReturnedAsyncResult">
+            <summary>The value "{0}" is not the return value from BeginSendRequest.</summary>
+        </member>
+        <member name="P:System.SR.DsmlAuthRequestNotSupported">
+            <summary>LdapConnection object does not support DsmlAuthRequest.</summary>
+        </member>
+        <member name="P:System.SR.CallBackIsNull">
+            <summary>Callback function can not be null when partial result processing is in ReturnPartialResultsAndNotifyCallback mode.</summary>
+        </member>
+        <member name="P:System.SR.NullValueArray">
+            <summary>The array should not contain null reference.</summary>
+        </member>
+        <member name="P:System.SR.TimespanExceedMax">
+            <summary>The value exceeds the maximum allowed.</summary>
+        </member>
+        <member name="P:System.SR.InvliadRequestType">
+            <summary>The specified request is not supported.</summary>
+        </member>
+        <member name="P:System.SR.DirectoryServicesProtocols_PlatformNotSupported">
+            <summary>System.DirectoryServices.Protocols is not supported on this platform.</summary>
+        </member>
+        <member name="P:System.SR.QuotaControlNotSupported">
+            <summary>System.DirectoryServices.Protocols.QuotaControl is not supported on this platform.</summary>
+        </member>
+        <member name="P:System.SR.ReferralChasingOptionsNotSupported">
+            <summary>Only ReferralChasingOptions.None and ReferralChasingOptions.All are supported on Linux.</summary>
+        </member>
+        <member name="T:System.Runtime.InteropServices.LibraryImportAttribute">
+            <summary>
+            Attribute used to indicate a source generator should create a function for marshalling
+            arguments instead of relying on the runtime to generate an equivalent marshalling function at run-time.
+            </summary>
+            <remarks>
+            This attribute is meaningless if the source generator associated with it is not enabled.
+            The current built-in source generator only supports C# and only supplies an implementation when
+            applied to static, partial, non-generic methods.
+            </remarks>
+        </member>
+        <member name="M:System.Runtime.InteropServices.LibraryImportAttribute.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:System.Runtime.InteropServices.LibraryImportAttribute"/>.
+            </summary>
+            <param name="libraryName">Name of the library containing the import.</param>
+        </member>
+        <member name="P:System.Runtime.InteropServices.LibraryImportAttribute.LibraryName">
+            <summary>
+            Gets the name of the library containing the import.
+            </summary>
+        </member>
+        <member name="P:System.Runtime.InteropServices.LibraryImportAttribute.EntryPoint">
+            <summary>
+            Gets or sets the name of the entry point to be called.
+            </summary>
+        </member>
+        <member name="P:System.Runtime.InteropServices.LibraryImportAttribute.StringMarshalling">
+            <summary>
+            Gets or sets how to marshal string arguments to the method.
+            </summary>
+            <remarks>
+            If this field is set to a value other than <see cref="F:System.Runtime.InteropServices.StringMarshalling.Custom" />,
+            <see cref="P:System.Runtime.InteropServices.LibraryImportAttribute.StringMarshallingCustomType" /> must not be specified.
+            </remarks>
+        </member>
+        <member name="P:System.Runtime.InteropServices.LibraryImportAttribute.StringMarshallingCustomType">
+            <summary>
+            Gets or sets the <see cref="T:System.Type"/> used to control how string arguments to the method are marshalled.
+            </summary>
+            <remarks>
+            If this field is specified, <see cref="P:System.Runtime.InteropServices.LibraryImportAttribute.StringMarshalling" /> must not be specified
+            or must be set to <see cref="F:System.Runtime.InteropServices.StringMarshalling.Custom" />.
+            </remarks>
+        </member>
+        <member name="P:System.Runtime.InteropServices.LibraryImportAttribute.SetLastError">
+            <summary>
+            Gets or sets whether the callee sets an error (SetLastError on Windows or errno
+            on other platforms) before returning from the attributed method.
+            </summary>
+        </member>
+        <member name="T:System.Runtime.InteropServices.StringMarshalling">
+            <summary>
+            Specifies how strings should be marshalled for generated p/invokes
+            </summary>
+        </member>
+        <member name="F:System.Runtime.InteropServices.StringMarshalling.Custom">
+            <summary>
+            Indicates the user is suppling a specific marshaller in <see cref="P:System.Runtime.InteropServices.LibraryImportAttribute.StringMarshallingCustomType"/>.
+            </summary>
+        </member>
+        <member name="F:System.Runtime.InteropServices.StringMarshalling.Utf8">
+            <summary>
+            Use the platform-provided UTF-8 marshaller.
+            </summary>
+        </member>
+        <member name="F:System.Runtime.InteropServices.StringMarshalling.Utf16">
+            <summary>
+            Use the platform-provided UTF-16 marshaller.
+            </summary>
+        </member>
+        <member name="T:Interop.BOOL">
+            <summary>
+            Blittable version of Windows BOOL type. It is convenient in situations where
+            manual marshalling is required, or to avoid overhead of regular bool marshalling.
+            </summary>
+            <remarks>
+            Some Windows APIs return arbitrary integer values although the return type is defined
+            as BOOL. It is best to never compare BOOL to TRUE. Always use bResult != BOOL.FALSE
+            or bResult == BOOL.FALSE .
+            </remarks>
+        </member>
+    </members>
+</doc>

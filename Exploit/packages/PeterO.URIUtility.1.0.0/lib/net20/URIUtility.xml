@@ -1,0 +1,378 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>URIUtility</name>
+    </assembly>
+    <members>
+        <member name="T:PeterO.URIUtility">
+            <summary>Contains utility methods for processing Uniform Resource
+            Identifiers (URIs) and Internationalized Resource Identifiers
+            (IRIs) under RFC3986 and RFC3987, respectively. In the following
+            documentation, URIs and IRIs include URI references and IRI
+            references, for convenience.
+            <para>There are five components to a URI: scheme, authority, path,
+            query, and fragment identifier. The generic syntax to these
+            components is defined in RFC3986 and extended in RFC3987. According
+            to RFC3986, different URI schemes can further restrict the syntax
+            of the authority, path, and query component (see also RFC 7320).
+            However, the syntax of fragment identifiers depends on the media
+            type (also known as MIME type) of the resource a URI references
+            (see also RFC 3986 and RFC 7320). As of September 3, 2019, only the
+            following media types specify a syntax for fragment
+            identifiers:</para>
+            <list>
+            <item>The following application/* media types: epub + zip, pdf,
+            senml + cbor, senml + json, senml-exi, sensml + cbor, sensml +
+            json, sensml-exi, smil, vnd.3gpp-v2x-local-service-information,
+            vnd.3gpp.mcdata-signalling, vnd.collection.doc + json, vnd.hc +
+            json, vnd.hyper + json, vnd.hyper-item + json, vnd.mason + json,
+            vnd.microsoft.portable-executable, vnd.oma.bcast.sgdu,
+            vnd.shootproof + json</item>
+            <item>The following image/* media types: avci, avcs, heic,
+            heic-sequence, heif, heif-sequence, hej2k, hsj2, jxra, jxrs, jxsi,
+            jxss</item>
+            <item>The XML media types: application/xml,
+            application/xml-external-parsed-entity, text/xml,
+            text/xml-external-parsed-entity, application/xml-dtd</item>
+            <item>All media types with subtypes ending in "+xml" (see RFC 7303)
+            use XPointer Framework syntax as fragment identifiers, except the
+            following application/* media types: dicom + xml (syntax not
+            defined), senml + xml (own syntax), sensml + xml (own syntax), ttml
+            + xml (own syntax), xliff + xml (own syntax), yang-data + xml
+            (syntax not defined)</item>
+            <item>font/collection</item>
+            <item>multipart/x-mixed-replace</item>
+            <item>text/plain</item>
+            <item>text/csv</item>
+            <item>text/html</item>
+            <item>text/markdown</item>
+            <item>text/vnd.a</item></list></summary>
+        </member>
+        <member name="T:PeterO.URIUtility.ParseMode">
+            <summary>Specifies whether certain characters are allowed when
+            parsing IRIs and URIs.</summary>
+        </member>
+        <member name="F:PeterO.URIUtility.ParseMode.IRIStrict">
+            <summary>The rules follow the syntax for parsing IRIs. In
+            particular, many code points outside the Basic Latin range (U+0000
+            to U+007F) are allowed. Strings with unpaired surrogate code points
+            are considered invalid.</summary>
+        </member>
+        <member name="F:PeterO.URIUtility.ParseMode.URIStrict">
+            <summary>The rules follow the syntax for parsing IRIs, except that
+            code points outside the Basic Latin range (U+0000 to U+007F) are
+            not allowed.</summary>
+        </member>
+        <member name="F:PeterO.URIUtility.ParseMode.IRILenient">
+            <summary>The rules only check for the appropriate delimiters when
+            splitting the path, without checking if all the characters in each
+            component are valid. Even with this mode, strings with unpaired
+            surrogate code points are considered invalid.</summary>
+        </member>
+        <member name="F:PeterO.URIUtility.ParseMode.URILenient">
+            <summary>The rules only check for the appropriate delimiters when
+            splitting the path, without checking if all the characters in each
+            component are valid. Code points outside the Basic Latin range
+            (U+0000 to U+007F) are not allowed.</summary>
+        </member>
+        <member name="F:PeterO.URIUtility.ParseMode.IRISurrogateLenient">
+            <summary>The rules only check for the appropriate delimiters when
+            splitting the path, without checking if all the characters in each
+            component are valid. Unpaired surrogate code points are treated as
+            though they were replacement characters instead for the purposes of
+            these rules, so that strings with those code points are not
+            considered invalid strings.</summary>
+        </member>
+        <member name="M:PeterO.URIUtility.EscapeURI(System.String,System.Int32)">
+            <summary>Escapes characters that can't appear in URIs or IRIs. The
+            function is idempotent; that is, calling the function again on the
+            result with the same mode doesn't change the result.</summary>
+            <param name='s'>A string to escape.</param>
+            <param name='mode'>Has the following meaning: 0 = Encode reserved
+            code points, code points below U+0021, code points above U+007E,
+            and square brackets within the authority component, and do the
+            IRISurrogateLenient check. 1 = Encode code points above U+007E, and
+            square brackets within the authority component, and do the
+            IRIStrict check. 2 = Same as 1, except the check is
+            IRISurrogateLenient. 3 = Same as 0, except that percent characters
+            that begin illegal percent-encoding are also encoded.</param>
+            <returns>A string possibly containing escaped characters, or null
+            if s is null.</returns>
+        </member>
+        <member name="M:PeterO.URIUtility.HasScheme(System.String)">
+            <summary>
+             Determines whether the string is a valid IRI with a
+            scheme component. This can be used to check for
+            relative IRI references.
+            <para>The following cases return true:</para>
+            <code>xx-x:mm example:/ww</code>
+             The following cases return false:
+            <code>x@y:/z /x/y/z example.xyz</code>
+             .
+            </summary>
+            <param name='refValue'>A string representing an IRI to
+            check.</param>
+            <returns><c>true</c>
+             if the string is a valid IRI with a scheme
+            component; otherwise, <c>false</c>
+            .</returns>
+        </member>
+        <member name="M:PeterO.URIUtility.HasSchemeForURI(System.String)">
+            <summary>
+             Determines whether the string is a valid URI with a
+            scheme component. This can be used to check for
+            relative URI references. The following cases return
+            true:
+            <code>http://example/z xx-x:mm example:/ww</code>
+             The following cases return false:
+            <code>x@y:/z /x/y/z example.xyz</code>
+             .
+            </summary>
+            <param name='refValue'>A string representing an IRI to
+            check.</param>
+            <returns><c>true</c>
+             if the string is a valid URI with a scheme
+            component; otherwise, <c>false</c>
+            .</returns>
+        </member>
+        <member name="M:PeterO.URIUtility.PercentDecode(System.String)">
+            <summary>Decodes percent-encoding (of the form "%XX" where X is a
+            hexadecimal digit) in the given string. Successive percent-encoded
+            bytes are assumed to form characters in UTF-8.</summary>
+            <param name='str'>A string that may contain percent encoding. May
+            be null.</param>
+            <returns>The string in which percent-encoding was
+            decoded.</returns>
+        </member>
+        <member name="M:PeterO.URIUtility.PercentDecode(System.String,System.Int32,System.Int32)">
+            <summary>Decodes percent-encoding (of the form "%XX" where X is a
+            hexadecimal digit) in the given portion of a string. Successive
+            percent-encoded bytes are assumed to form characters in
+            UTF-8.</summary>
+            <param name='str'>A string a portion of which may contain percent
+            encoding. May be null.</param>
+            <param name='index'>Index starting at 0 showing where the desired
+            portion of <paramref name='str'/> begins.</param>
+            <param name='endIndex'>Index starting at 0 showing where the
+            desired portion of <paramref name='str'/> ends. The character
+            before this index is the last character.</param>
+            <returns>The portion of the given string in which percent-encoding
+            was decoded. Returns null if <paramref name='str'/> is
+            ull.</returns>
+        </member>
+        <member name="M:PeterO.URIUtility.EncodeStringForURI(System.String)">
+            <summary>Encodes characters other than "unreserved" characters for
+            URIs.</summary>
+            <param name='s'>A string to encode.</param>
+            <returns>The encoded string.</returns>
+            <exception cref='T:System.ArgumentNullException'>The parameter <paramref
+            name='s'/> is null.</exception>
+        </member>
+        <member name="M:PeterO.URIUtility.IsValidCurieReference(System.String,System.Int32,System.Int32)">
+            <summary>Determines whether the substring is a valid CURIE
+            reference under RDFA 1.1. (The CURIE reference is the part after
+            the colon.).</summary>
+            <param name='s'>A string containing a CURIE reference. Can be
+            null.</param>
+            <param name='offset'>A Index starting at 0 showing where the
+            desired portion of "s" begins.</param>
+            <param name='length'>The number of elements in the desired portion
+            of "s" (but not more than "s" 's length).</param>
+            <returns><c>true</c> if the substring is a valid CURIE reference
+            under RDFA 1; otherwise, <c>false</c>. Returns false if <paramref
+            name='s'/> is null.</returns>
+            <exception cref='T:System.ArgumentException'>Either <paramref
+            name='offset'/> or <paramref name='length'/> is less than 0 or
+            greater than <paramref name='s'/> 's length, or <paramref
+            name='s'/> ' s length minus <paramref name='offset'/> is less than
+            <paramref name='length'/>.</exception>
+            <exception cref='T:System.ArgumentNullException'>The parameter <paramref
+            name='s'/> is null.</exception>
+        </member>
+        <member name="M:PeterO.URIUtility.BuildIRI(System.String,System.String,System.String,System.String)">
+            <summary>Builds an internationalized resource identifier (IRI) from
+            its components.</summary>
+            <param name='schemeAndAuthority'>String representing a scheme
+            component, an authority component, or both. Examples of this
+            parameter include "example://example", "example:", and "//example",
+            but not "example". Can be null or empty.</param>
+            <param name='path'>A string representing a path component. Can be
+            null or empty.</param>
+            <param name='query'>The query string. Can be null or empty.</param>
+            <param name='fragment'>The fragment identifier. Can be null or
+            empty.</param>
+            <returns>A URI built from the given components.</returns>
+            <exception cref='T:System.ArgumentException'>Invalid schemeAndAuthority
+            parameter, or the arguments result in an invalid IRI.</exception>
+        </member>
+        <member name="M:PeterO.URIUtility.IsValidIRI(System.String)">
+            <summary>Returns whether a string is a valid IRI according to the
+            IRIStrict parse mode.</summary>
+            <param name='s'>A text string. Can be null.</param>
+            <returns>True if the string is not null and is a valid IRI;
+            otherwise, false.</returns>
+        </member>
+        <member name="M:PeterO.URIUtility.IsValidIRI(System.String,PeterO.URIUtility.ParseMode)">
+            <summary>Returns whether a string is a valid IRI according to the
+            given parse mode.</summary>
+            <param name='s'>A text string. Can be null.</param>
+            <param name='mode'>The parse mode to use when checking for a valid
+            IRI.</param>
+            <returns>True if the string is not null and is a valid IRI;
+            otherwise, false.</returns>
+        </member>
+        <member name="M:PeterO.URIUtility.RelativeResolve(System.String,System.String)">
+            <summary>Resolves a URI or IRI relative to another URI or
+            IRI.</summary>
+            <param name='refValue'>A string representing a URI or IRI
+            reference. Example: <c>dir/file.txt</c>.</param>
+            <param name='absoluteBase'>A string representing an absolute URI or
+            IRI reference. Can be null. Example:
+            <c>http://example.com/my/path/</c>.</param>
+            <returns>The resolved IRI, or null if <paramref name='refValue'/>
+            is null or is not a valid IRI. If <paramref name='absoluteBase'/>
+            is null or is not a valid IRI, returns refValue. Example:
+            <c>http://example.com/my/path/dir/file.txt</c>.</returns>
+        </member>
+        <member name="M:PeterO.URIUtility.RelativeResolve(System.String,System.String,PeterO.URIUtility.ParseMode)">
+            <summary>Resolves a URI or IRI relative to another URI or
+            IRI.</summary>
+            <param name='refValue'>A string representing a URI or IRI
+            reference. Example: <c>dir/file.txt</c>. Can be null.</param>
+            <param name='absoluteBase'>A string representing an absolute URI or
+            IRI reference. Can be null. Example:
+            <c>http://example.com/my/path/</c>.</param>
+            <param name='parseMode'>Parse mode that specifies whether certain
+            characters are allowed when parsing IRIs and URIs.</param>
+            <returns>The resolved IRI, or null if <paramref name='refValue'/>
+            is null or is not a valid IRI. If <paramref name='absoluteBase'/>
+            is null or is not a valid IRI, returns refValue.</returns>
+            <exception cref='T:System.ArgumentNullException'>The parameter <paramref
+            name='refValue'/> or <paramref name='absoluteBase'/> or <paramref
+            name='refValue'/> or <paramref name='refValue'/> is
+            null.</exception>
+        </member>
+        <member name="M:PeterO.URIUtility.SplitIRIToStrings(System.String)">
+            <summary>Parses an Internationalized Resource Identifier (IRI)
+            reference under RFC3987. If the IRI reference is syntactically
+            valid, splits the string into its components and returns an array
+            containing those components.</summary>
+            <param name='s'>A string that contains an IRI. Can be null.</param>
+            <returns>If the string is a valid IRI reference, returns an array
+            of five strings. Each of the five pairs corresponds to the IRI's
+            scheme, authority, path, query, or fragment identifier,
+            respectively. If a component is absent, the corresponding element
+            will be null. If the string is null or is not a valid IRI, returns
+            null.</returns>
+        </member>
+        <member name="M:PeterO.URIUtility.SplitIRI(System.String)">
+            <summary>Parses an Internationalized Resource Identifier (IRI)
+            reference under RFC3987. If the IRI reference is syntactically
+            valid, splits the string into its components and returns an array
+            containing the indices into the components.</summary>
+            <param name='s'>A string that contains an IRI. Can be null.</param>
+            <returns>If the string is a valid IRI reference, returns an array
+            of 10 integers. Each of the five pairs corresponds to the start and
+            end index of the IRI's scheme, authority, path, query, or fragment
+            identifier, respectively. The scheme, authority, query, and
+            fragment identifier, if present, will each be given without the
+            ending colon, the starting "//", the starting "?", and the starting
+            "#", respectively. If a component is absent, both indices in that
+            pair will be -1. If the string is null or is not a valid IRI,
+            returns null.</returns>
+        </member>
+        <member name="M:PeterO.URIUtility.SplitIRI(System.String,System.Int32,System.Int32,PeterO.URIUtility.ParseMode)">
+            <summary>Parses a substring that represents an Internationalized
+            Resource Identifier (IRI) under RFC3987. If the IRI is
+            syntactically valid, splits the string into its components and
+            returns an array containing the indices into the
+            components.</summary>
+            <param name='s'>A string that contains an IRI. Can be null.</param>
+            <param name='offset'>A Index starting at 0 showing where the
+            desired portion of "s" begins.</param>
+            <param name='length'>The length of the desired portion of "s" (but
+            not more than "s" 's length).</param>
+            <param name='parseMode'>Parse mode that specifies whether certain
+            characters are allowed when parsing IRIs and URIs.</param>
+            <returns>If the string is a valid IRI, returns an array of 10
+            integers. Each of the five pairs corresponds to the start and end
+            index of the IRI's scheme, authority, path, query, or fragment
+            component, respectively. The scheme, authority, query, and fragment
+            components, if present, will each be given without the ending
+            colon, the starting "//", the starting "?", and the starting "#",
+            respectively. If a component is absent, both indices in that pair
+            will be -1 (an index won't be less than 0 in any other case). If
+            the string is null or is not a valid IRI, returns null.</returns>
+            <exception cref='T:System.ArgumentException'>Either <paramref
+            name='offset'/> or <paramref name='length'/> is less than 0 or
+            greater than <paramref name='s'/> 's length, or <paramref
+            name='s'/> ' s length minus <paramref name='offset'/> is less than
+            <paramref name='length'/>.</exception>
+            <exception cref='T:System.ArgumentNullException'>The parameter <paramref
+            name='s'/> is null.</exception>
+        </member>
+        <member name="M:PeterO.URIUtility.SplitIRI(System.String,PeterO.URIUtility.ParseMode)">
+            <summary>Parses an Internationalized Resource Identifier (IRI)
+            reference under RFC3987. If the IRI is syntactically valid, splits
+            the string into its components and returns an array containing the
+            indices into the components.</summary>
+            <param name='s'>A string representing an IRI. Can be null.</param>
+            <param name='parseMode'>The parameter <paramref name='parseMode'/>
+            is a ParseMode object.</param>
+            <returns>If the string is a valid IRI reference, returns an array
+            of 10 integers. Each of the five pairs corresponds to the start and
+            end index of the IRI's scheme, authority, path, query, or fragment
+            identifier, respectively. The scheme, authority, query, and
+            fragment identifier, if present, will each be given without the
+            ending colon, the starting "//", the starting "?", and the starting
+            "#", respectively. If a component is absent, both indices in that
+            pair will be -1. If the string is null or is not a valid IRI,
+            returns null.</returns>
+        </member>
+        <member name="M:PeterO.URIUtility.DirectoryPath(System.String)">
+            <summary>Extracts the scheme, the authority, and the path component
+            (up to and including the last "/" in the path if any) from the
+            given URI or IRI, using the IRIStrict parse mode to check the URI
+            or IRI. Any "./" or "../" in the path is not condensed.</summary>
+            <param name='uref'>A text string representing a URI or IRI. Can be
+            null.</param>
+            <returns>The directory path of the URI or IRI. Returns null if
+            <paramref name='uref'/> is null or not a valid URI or
+            IRI.</returns>
+            <exception cref='T:System.ArgumentNullException'>The parameter <paramref
+            name='uref'/> is null.</exception>
+        </member>
+        <member name="M:PeterO.URIUtility.DirectoryPath(System.String,PeterO.URIUtility.ParseMode)">
+            <summary>Extracts the scheme, the authority, and the path component
+            (up to and including the last "/" in the path if any) from the
+            given URI or IRI, using the given parse mode to check the URI or
+            IRI. Any "./" or "../" in the path is not condensed.</summary>
+            <param name='uref'>A text string representing a URI or IRI. Can be
+            null.</param>
+            <param name='parseMode'>The parse mode to use to check the URI or
+            IRI.</param>
+            <returns>The directory path of the URI or IRI. Returns null if
+            <paramref name='uref'/> is null or not a valid URI or
+            IRI.</returns>
+        </member>
+        <member name="M:PeterO.URIUtility.RelativeResolveWithinBaseURI(System.String,System.String)">
+            <summary>Resolves a URI or IRI relative to another URI or IRI, but
+            only if the resolved URI has no "." or ".." component in its path
+            and only if resolved URI's directory path matches that of the
+            second URI or IRI.</summary>
+            <param name='refValue'>A string representing a URI or IRI
+            reference. Example: <c>dir/file.txt</c>.</param>
+            <param name='absoluteBase'>A string representing an absolute URI
+            reference. Example: <c>http://example.com/my/path/</c>.</param>
+            <returns>The resolved IRI, or null if <paramref name='refValue'/>
+            is null or is not a valid IRI, or <paramref name='refValue'/> if
+            <paramref name='absoluteBase'/> is null or an empty string, or null
+            if <paramref name='absoluteBase'/> is neither null nor empty and is
+            not a valid IRI. Returns null instead if the resolved IRI has no
+            "." or ".." component in its path or if the resolved URI's
+            directory path does not match that of <paramref
+            name='absoluteBase'/>. Example:
+            <c>http://example.com/my/path/dir/file.txt</c>.</returns>
+        </member>
+    </members>
+</doc>

@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34009.444
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FindAvailablePort", "FindAvailablePort\FindAvailablePort.csproj", "{F8317556-F82B-4FE2-9857-3E8DE896AA32}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F8317556-F82B-4FE2-9857-3E8DE896AA32}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F8317556-F82B-4FE2-9857-3E8DE896AA32}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F8317556-F82B-4FE2-9857-3E8DE896AA32}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F8317556-F82B-4FE2-9857-3E8DE896AA32}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {753AE109-CB1E-4139-AAD1-99F4DDB8A29E}
+	EndGlobalSection
+EndGlobal

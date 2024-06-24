@@ -1,0 +1,708 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>System.DirectoryServices.AccountManagement</name>
+    </assembly>
+    <members>
+        <member name="M:System.DirectoryServices.AccountManagement.Utils.AreBytesEqual(System.Byte[],System.Byte[])">
+            <summary>
+            Performs bytewise comparison of two byte[] arrays
+            </summary>
+            <param name="src">Array to compare</param>
+            <param name="tgt">Array to compare against src</param>
+            <returns>true if identical, false otherwise</returns>
+        </member>
+        <member name="M:System.DirectoryServices.AccountManagement.PrincipalContext.ValidateCredentials(System.String,System.String)">
+            <summary>
+            Validate the passed credentials against the directory supplied.
+            This function will use the best determined method to do the evaluation.
+            </summary>
+        </member>
+        <member name="M:System.DirectoryServices.AccountManagement.PrincipalContext.ValidateCredentials(System.String,System.String,System.DirectoryServices.AccountManagement.ContextOptions)">
+            <summary>
+            Validate the passed credentials against the directory supplied.
+            The supplied options will determine the directory method for credential validation.
+            </summary>
+        </member>
+        <member name="F:System.DirectoryServices.AccountManagement.GroupPrincipal._isSmallGroup">
+            <summary>
+            if isSmallGroup has a value, it means we already checked if the group is small
+            </summary>
+        </member>
+        <member name="P:System.DirectoryServices.AccountManagement.GroupPrincipal.SmallGroupMemberSearchResult">
+            <summary>
+            cache the search result for the member attribute
+            it will only be set for small groups!
+            </summary>
+        </member>
+        <member name="M:System.DirectoryServices.AccountManagement.GroupPrincipal.IsSmallGroup">
+            <summary>
+             Finds if the group is "small", meaning that it has less than MaxValRange values (usually 1500)
+             The property list for the searcher of a group has "member" attribute. if there are more results than MaxValRange, there will also be a "member;range=..." attribute
+             we can cache the result and don't fear from changes through Add/Remove/Save because the completed/pending lists are looked up before the actual values are
+            </summary>
+        </member>
+        <member name="T:System.DirectoryServices.AccountManagement.ADDNConstraintLinkedAttrSet.ResultValidator">
+            
+             <summary>
+             Result validator - Delegate function signature.
+            
+             The result validator should return true if the result is valid
+             and false if the result is invalid and needs to be skipped.
+             </summary>
+             <param name="resultPropCollection">
+             Directory entry object of the result.
+             NOTE: ADDNLinkedAttrSet class is responsible for disposing this DirectoryEntry object.
+             </param>
+             <returns>
+             True - if the result is valid (further processing with the result will happen in this case)
+             False - If the result is invalid. In this case the result will skipped.
+             </returns>
+            
+        </member>
+        <member name="M:System.DirectoryServices.AccountManagement.ADStoreCtx.EnablePrincipalIfNecessary(System.DirectoryServices.AccountManagement.Principal)">
+            <summary>
+            If The enabled property was set on the principal then perform actions
+            necessary on the principal to set the enabled status to match
+            the set value.
+            </summary>
+            <param name="p"></param>
+        </member>
+        <member name="M:System.DirectoryServices.AccountManagement.ADStoreCtx.SetAuthPrincipalEnableStatus(System.DirectoryServices.AccountManagement.AuthenticablePrincipal,System.Boolean)">
+             <summary>
+             Read the Account Control From the Directory entry.  If the control is read then set or
+             clear bit 0x2 corresponding to the enable parameter
+             </summary>
+             <param name="ap">Principal to modify</param>
+             <param name="enable">New state of the enable bit</param>
+            
+        </member>
+        <member name="M:System.DirectoryServices.AccountManagement.ADStoreCtx.Update(System.DirectoryServices.AccountManagement.Principal)">
+            <summary>
+            Apply all changed properties on the principal to the Directory Entry.
+            Reset the changed status on all the properties
+            </summary>
+            <param name="p">Principal to update</param>
+        </member>
+        <member name="M:System.DirectoryServices.AccountManagement.ADStoreCtx.Delete(System.DirectoryServices.AccountManagement.Principal)">
+            <summary>
+            Delete the directory entry that corresponds to the principal
+            </summary>
+            <param name="p">Principal to delete</param>
+        </member>
+        <member name="M:System.DirectoryServices.AccountManagement.ADStoreCtx.InitializeUserAccountControl(System.DirectoryServices.AccountManagement.AuthenticablePrincipal)">
+            <summary>
+            This method sets the default user account control bits for the new principal
+            being created in this account store.
+            </summary>
+            <param name="p"> Principal to set the user account control bits for </param>
+        </member>
+        <member name="M:System.DirectoryServices.AccountManagement.ADStoreCtx.IsLockedOut(System.DirectoryServices.AccountManagement.AuthenticablePrincipal)">
+            <summary>
+            Determine if principal account is locked.
+            First read User-Account-control-computed from the DE.  On Uplevel platforms this computed attribute will exist and we can
+            just check bit 0x0010.  On DL platforms this attribute does not exist so we must read lockoutTime and return locked if
+            this is greater than 0
+            </summary>
+            <param name="p">Principal to check status</param>
+            <returns>true is account is locked, false if not</returns>
+        </member>
+        <member name="M:System.DirectoryServices.AccountManagement.ADStoreCtx.UnlockAccount(System.DirectoryServices.AccountManagement.AuthenticablePrincipal)">
+            <summary>
+            Unlock account by setting LockoutTime to 0
+            </summary>
+            <param name="p">Principal to unlock</param>
+        </member>
+        <member name="M:System.DirectoryServices.AccountManagement.ADStoreCtx.SetPassword(System.DirectoryServices.AccountManagement.AuthenticablePrincipal,System.String)">
+            <summary>
+            Set the password on the principal. This function requires administrator privileges
+            </summary>
+            <param name="p">Principal to modify</param>
+            <param name="newPassword">New password</param>
+        </member>
+        <member name="M:System.DirectoryServices.AccountManagement.ADStoreCtx.ChangePassword(System.DirectoryServices.AccountManagement.AuthenticablePrincipal,System.String,System.String)">
+            <summary>
+            Change the password on the principal
+            </summary>
+            <param name="p">Principal to modify</param>
+            <param name="oldPassword">Current password</param>
+            <param name="newPassword">New password</param>
+        </member>
+        <member name="M:System.DirectoryServices.AccountManagement.ADStoreCtx.ExpirePassword(System.DirectoryServices.AccountManagement.AuthenticablePrincipal)">
+            <summary>
+            Expire password by setting pwdLastSet to 0
+            </summary>
+            <param name="p"></param>
+        </member>
+        <member name="M:System.DirectoryServices.AccountManagement.ADStoreCtx.UnexpirePassword(System.DirectoryServices.AccountManagement.AuthenticablePrincipal)">
+            <summary>
+            Unexpire password by setting pwdLastSet to -1
+            </summary>
+            <param name="p"></param>
+        </member>
+        <member name="M:System.DirectoryServices.AccountManagement.ADStoreCtx.WriteAttribute(System.DirectoryServices.AccountManagement.Principal,System.String,System.Int32)">
+            <summary>
+            Set value for attribute on the passed principal.  This is only valid for integer attribute types
+            </summary>
+            <param name="p"></param>
+            <param name="attribute"></param>
+            <param name="value"></param>
+        </member>
+        <member name="M:System.DirectoryServices.AccountManagement.ADStoreCtx.IsMemberOfInStore(System.DirectoryServices.AccountManagement.GroupPrincipal,System.DirectoryServices.AccountManagement.Principal)">
+            First check direct group membership by using DE.IsMember
+            If this fails then we may have a ForeignSecurityPrincipal so search for Foreign Security Principals
+            With the p's SID and then call IsMember with the ADS Path returned from the search.
+        </member>
+        <member name="P:System.DirectoryServices.AccountManagement.ADStoreCtx.ContextBasePartitionDN">
+            
+             <summary>
+             Returns the DN of the Partition to which the user supplied
+             context base (this.ctxBase) belongs.
+             </summary>
+            
+        </member>
+        <member name="M:System.DirectoryServices.AccountManagement.ADStoreCtx.AddPropertySetToTypePropListMap(System.Type,System.Collections.Specialized.StringCollection)">
+            
+             <summary>
+             Adds the specified Property set to the TypeToPropListMap data structure.
+             </summary>
+            
+        </member>
+        <member name="M:System.DirectoryServices.AccountManagement.ADStoreCtx.GetEscapedDN(System.String)">
+            <summary>
+            This Calls the Native API to Escape the DN
+            </summary>
+            <param name="dn"></param>
+            <returns>Escaped DN</returns>
+        </member>
+        <member name="M:System.DirectoryServices.AccountManagement.ADUtils.AreSidsInSameDomain(System.Security.Principal.SecurityIdentifier,System.Security.Principal.SecurityIdentifier)">
+            
+             <summary>
+             Returns true if the specified SIDs are from the same domain.
+             Otherwise return false.
+             </summary>
+             <param name="sid1"></param>
+             <param name="sid2"></param>
+             <returns>Returns true if the specified SIDs are from the same domain.
+             Otherwise return false
+             </returns>
+            
+        </member>
+        <member name="T:System.DirectoryServices.AccountManagement.SDSCache">
+            <summary>
+            This is a class designed to cache DirectoryEntries instead of creating them every time.
+            </summary>
+        </member>
+        <member name="T:System.DirectoryServices.AccountManagement.RangeRetriever">
+            
+             <summary>
+             Retrieves all the values of the specified attribute using the supplied DirectoryEntry object.
+             This function would additionally dispose the supplied DirectoryEntry object in its Dispose() method
+             if disposeDirEntry parameter is set to true in its constructor.
+             </summary>
+            
+        </member>
+        <member name="M:System.DirectoryServices.AccountManagement.RangeRetriever.#ctor(System.DirectoryServices.DirectoryEntry,System.String,System.Boolean)">
+            
+             <summary>
+             Creates a new RangeRetriever object.
+             </summary>
+             <param name="de">DirectoryEntry object whose attribute needs to be range retrieved</param>
+             <param name="propertyName">name of the attribute that needs to be range retrieved, ex: "memberOf"</param>
+             <param name="disposeDirEntry">
+             If set to true, the supplied DirectoryEntry will be disposed,
+             by this object's Dispose() method
+             </param>
+            
+        </member>
+        <member name="P:System.DirectoryServices.AccountManagement.RangeRetriever.CacheValues">
+            
+             <summary>
+             If set to true then the attribute values will be cached in the InnerList
+             </summary>
+             <remarks>
+             By default caching is turned off.
+             </remarks>
+        </member>
+        <member name="M:System.DirectoryServices.AccountManagement.ADAMStoreCtx.ChangePassword(System.DirectoryServices.AccountManagement.AuthenticablePrincipal,System.String,System.String)">
+            <summary>
+            Change the password on the principal
+            </summary>
+            <param name="p">Principal to modify</param>
+            <param name="oldPassword">Current password</param>
+            <param name="newPassword">New password</param>
+        </member>
+        <member name="M:System.DirectoryServices.AccountManagement.ADAMStoreCtx.InitializeUserAccountControl(System.DirectoryServices.AccountManagement.AuthenticablePrincipal)">
+            <summary>
+            This method sets the default user account control bits for the new principal
+            being created in this account store.
+            </summary>
+            <param name="p"> Principal to set the user account control bits for </param>
+        </member>
+        <member name="M:System.DirectoryServices.AccountManagement.SAMStoreCtx.InitializeUserAccountControl(System.DirectoryServices.AccountManagement.AuthenticablePrincipal)">
+            <summary>
+            This method sets the default user account control bits for the new principal
+            being created in this account store.
+            </summary>
+            <param name="p"> Principal to set the user account control bits for </param>
+        </member>
+        <member name="P:System.SR.ContextNoWellKnownObjects">
+            <summary>The domain's wellKnownObjects attribute does not contain values for the well-known users and/or computers containers.</summary>
+        </member>
+        <member name="P:System.SR.ContextNoContainerForMachineCtx">
+            <summary>A container cannot be specified when using the Machine context.</summary>
+        </member>
+        <member name="P:System.SR.ContextNoContainerForApplicationDirectoryCtx">
+            <summary>A container and name must be specified when using the Application Directory context.</summary>
+        </member>
+        <member name="P:System.SR.ContextBadUserPwdCombo">
+            <summary>The user name and password must either both be null or both must be non-null.</summary>
+        </member>
+        <member name="P:System.SR.StoreNotSupportMethod">
+            <summary>This store does not support this method.</summary>
+        </member>
+        <member name="P:System.SR.PrincipalUnsupportPropertyForPlatform">
+            <summary>Principals in this version of the store do not support the property '{0}'.</summary>
+        </member>
+        <member name="P:System.SR.PrincipalUnsupportPropertyForType">
+            <summary>Principal objects of type {0} in this type of store do not support the property '{1}'.</summary>
+        </member>
+        <member name="P:System.SR.PrincipalMustSetContextForSave">
+            <summary>A PrincipalContext must first be assigned to an unpersisted Principal object before the Principal can be saved.</summary>
+        </member>
+        <member name="P:System.SR.PrincipalMustSetContextForNative">
+            <summary>A PrincipalContext must first be assigned to an unpersisted Principal object before the type of the underlying object can be retrieved.</summary>
+        </member>
+        <member name="P:System.SR.PrincipalMustSetContextForProperty">
+            <summary>A PrincipalContext must first be assigned to the unpersisted Principal object before this property can be accessed.</summary>
+        </member>
+        <member name="P:System.SR.PrincipalCantDeleteUnpersisted">
+            <summary>Unpersisted Principal objects can not be deleted.</summary>
+        </member>
+        <member name="P:System.SR.PrincipalAccessedAfterBeingDeleted">
+            <summary>Cannot access an already deleted object</summary>
+        </member>
+        <member name="P:System.SR.PrincipalNotSupportedOnFakePrincipal">
+            <summary>This Principal object represents a well-known SID and does not correspond to an actual store object.  This operation is not supported on it.</summary>
+        </member>
+        <member name="P:System.SR.PrincipalMustPersistFirst">
+            <summary>The Principal object must be persisted before this method can be called.</summary>
+        </member>
+        <member name="P:System.SR.PrincipalSearcherPersistedPrincipal">
+            <summary>Persisted Principal objects cannot be used as query filters.</summary>
+        </member>
+        <member name="P:System.SR.PrincipalSearcherMustSetFilter">
+            <summary>A QueryFilter must first be assigned to the PrincipalSearcher before the query can be performed.</summary>
+        </member>
+        <member name="P:System.SR.PrincipalSearcherNoUnderlying">
+            <summary>There is no underlying searcher for the type of store associated with the PrincipalContext.</summary>
+        </member>
+        <member name="P:System.SR.PrincipalSearcherNonReferentialProps">
+            <summary>Only non-referential properties (properties which do not contain or refer to Principal objects) can be used in the query filter.  The Principal object specified as the query filter has referential properties set.</summary>
+        </member>
+        <member name="P:System.SR.FindResultEnumInvalidPos">
+            <summary>The enumerator is positioned before the first element of the collection or after the last element.</summary>
+        </member>
+        <member name="P:System.SR.TrackedCollectionNotOneDimensional">
+            <summary>The destination array must be one-dimensional.</summary>
+        </member>
+        <member name="P:System.SR.TrackedCollectionIndexNotInArray">
+            <summary>The specified index is greater than or equal to than the length of the destination array.</summary>
+        </member>
+        <member name="P:System.SR.TrackedCollectionArrayTooSmall">
+            <summary>The number of elements to copy is greater than the available space in the destination array.</summary>
+        </member>
+        <member name="P:System.SR.TrackedCollectionEnumHasChanged">
+            <summary>The collection was modified after the enumerator was created.</summary>
+        </member>
+        <member name="P:System.SR.TrackedCollectionEnumInvalidPos">
+            <summary>The enumerator is positioned before the first element of the collection or after the last element.</summary>
+        </member>
+        <member name="P:System.SR.MultipleMatchingPrincipals">
+            <summary>Multiple principals contain a matching Identity.</summary>
+        </member>
+        <member name="P:System.SR.NoMatchingPrincipalExceptionText">
+            <summary>No principal matching the specified parameters was found.</summary>
+        </member>
+        <member name="P:System.SR.NoMatchingGroupExceptionText">
+            <summary>No group matching the specified parameters was found.</summary>
+        </member>
+        <member name="P:System.SR.PrincipalExistsExceptionText">
+            <summary>The principal already exists in the store.</summary>
+        </member>
+        <member name="P:System.SR.PrincipalCollectionNotOneDimensional">
+            <summary>The destination array must be one-dimensional.</summary>
+        </member>
+        <member name="P:System.SR.PrincipalCollectionIndexNotInArray">
+            <summary>The specified index is greater than or equal to than the length of the destination array.</summary>
+        </member>
+        <member name="P:System.SR.PrincipalCollectionArrayTooSmall">
+            <summary>The number of elements to copy is greater than the available space in the destination array.</summary>
+        </member>
+        <member name="P:System.SR.PrincipalCollectionEnumHasChanged">
+            <summary>The collection was modified after the enumerator was created.</summary>
+        </member>
+        <member name="P:System.SR.PrincipalCollectionEnumInvalidPos">
+            <summary>The enumerator is positioned before the first element of the collection or after the last element.</summary>
+        </member>
+        <member name="P:System.SR.AuthenticablePrincipalMustBeSubtypeOfAuthPrinc">
+            <summary>The subtype parameter must be either AuthenticablePrincipal or a subtype of AuthenticablePrincipal.</summary>
+        </member>
+        <member name="P:System.SR.PasswordInfoChangePwdOnUnpersistedPrinc">
+            <summary>The ChangePassword method can not be called on an unpersisted Principal object.</summary>
+        </member>
+        <member name="P:System.SR.UserMustSetContextForMethod">
+            <summary>A PrincipalContext must first be assigned to the unpersisted User object before this method can be called.</summary>
+        </member>
+        <member name="P:System.SR.UserCouldNotFindCurrent">
+            <summary>The User object for the current user could not be found.  You may not have access to it.</summary>
+        </member>
+        <member name="P:System.SR.UnableToRetrieveDomainInfo">
+            <summary>Information about the domain could not be retrieved ({0}).</summary>
+        </member>
+        <member name="P:System.SR.UnableToOpenToken">
+            <summary>The thread or process token could not be accessed ({0}).</summary>
+        </member>
+        <member name="P:System.SR.UnableToRetrieveTokenInfo">
+            <summary>Information from the thread token could not be retrieved ({0}).</summary>
+        </member>
+        <member name="P:System.SR.UnableToRetrievePolicy">
+            <summary>This computer's policy information could not be retrieved ({0}).</summary>
+        </member>
+        <member name="P:System.SR.UnableToImpersonateCredentials">
+            <summary>The supplied credentials could not be impersonated.</summary>
+        </member>
+        <member name="P:System.SR.StoreCtxUnsupportedPrincipalTypeForSave">
+            <summary>Principal objects of type {0} can not be saved in this store.</summary>
+        </member>
+        <member name="P:System.SR.StoreCtxUnsupportedPrincipalTypeForGroupInsert">
+            <summary>Principal objects of type {0} can not be inserted into groups in this store</summary>
+        </member>
+        <member name="P:System.SR.StoreCtxUnsupportedPrincipalTypeForQuery">
+            <summary>Principal objects of type {0} can not be used in a query against this store.</summary>
+        </member>
+        <member name="P:System.SR.StoreCtxUnsupportedPropertyForQuery">
+            <summary>The property '{0}' can not be used in a query against this store.</summary>
+        </member>
+        <member name="P:System.SR.StoreCtxUnsupportedIdentityClaimForQuery">
+            <summary>This IdentityType can not be used in a query against this store.</summary>
+        </member>
+        <member name="P:System.SR.StoreCtxIdentityClaimMustHaveScheme">
+            <summary>The IdentityClaim to use in the query must have a UrnScheme specified.</summary>
+        </member>
+        <member name="P:System.SR.StoreCtxSecurityIdentityClaimBadFormat">
+            <summary>The SID is not in a valid format.</summary>
+        </member>
+        <member name="P:System.SR.StoreCtxGuidIdentityClaimBadFormat">
+            <summary>The GUID is not in a valid format.</summary>
+        </member>
+        <member name="P:System.SR.StoreCtxNT4IdentityClaimWrongForm">
+            <summary>The samAccountName IdentityType must be in the form "domainname\\userName", "machinename\\userName", or "userName".</summary>
+        </member>
+        <member name="P:System.SR.StoreCtxGroupHasUnpersistedInsertedPrincipal">
+            <summary>The Group object can not be saved until the unpersisted Principal object in its Members property is either saved or removed from the collection.</summary>
+        </member>
+        <member name="P:System.SR.StoreCtxNeedValueSecurityIdentityClaimToQuery">
+            <summary>The Principal object must have a valid SID IdentityType in order to perform this operation.</summary>
+        </member>
+        <member name="P:System.SR.ADStoreCtxUnsupportedPrincipalContextForGroupInsert">
+            <summary>Only domain Principal objects can be inserted into groups in this store.</summary>
+        </member>
+        <member name="P:System.SR.ADStoreCtxCouldntGetSIDForGroupMember">
+            <summary>The SID for one of the Principal objects to be inserted into the group could not be retrieved from the store.</summary>
+        </member>
+        <member name="P:System.SR.ADStoreCtxMustBeContainer">
+            <summary>Domain PrincipalContext objects must be rooted at a directory entry that is a container.</summary>
+        </member>
+        <member name="P:System.SR.ADStoreCtxCantRetrieveObjectSidForCrossStore">
+            <summary>While trying to resolve a cross-store reference, the objectSid could not be retrieved from the representation of the target principal.</summary>
+        </member>
+        <member name="P:System.SR.ADStoreCtxCantResolveSidForCrossStore">
+            <summary>While trying to resolve a cross-store reference, the SID of the target principal could not be resolved.  The error code is {0}.</summary>
+        </member>
+        <member name="P:System.SR.ADStoreCtxFailedFindCrossStoreTarget">
+            <summary>While trying to resolve a cross-store reference, the target principal could not be found in the domain indicated by the principal's SID.</summary>
+        </member>
+        <member name="P:System.SR.ADStoreCtxUnableToReadExistingAccountControlFlagsToEnable">
+            <summary>The principal could not be enabled because the existing account control flags could not be read.</summary>
+        </member>
+        <member name="P:System.SR.ADStoreCtxUnableToReadExistingAccountControlFlagsForUpdate">
+            <summary>The principal could not be updated because the existing account control flags could not be read.</summary>
+        </member>
+        <member name="P:System.SR.ADStoreCtxUnableToReadExistingGroupTypeFlagsForUpdate">
+            <summary>The group could not be updated because the existing group type flags could not be read.</summary>
+        </member>
+        <member name="P:System.SR.ADStoreCtxCantClearGroup">
+            <summary>The Group object's Members property can not be cleared because one or more of the group's members have this group as their primary group.</summary>
+        </member>
+        <member name="P:System.SR.ADStoreCtxCantRemoveMemberFromGroup">
+            <summary>The member can not be removed from the Group object's Members property because it has this group as its primary group.</summary>
+        </member>
+        <member name="P:System.SR.ADStoreCtxNoComputerPasswordChange">
+            <summary>Password change operation is not supported for Computer accounts in this store.</summary>
+        </member>
+        <member name="P:System.SR.SAMStoreCtxUnableToRetrieveVersion">
+            <summary>The operating system version of the target computer could not be retrieved.</summary>
+        </member>
+        <member name="P:System.SR.SAMStoreCtxUnableToRetrieveMachineName">
+            <summary>The name of the target computer could not be retrieved.</summary>
+        </member>
+        <member name="P:System.SR.SAMStoreCtxUnableToRetrieveFlatMachineName">
+            <summary>The flat name of the target computer could not be retrieved ({0}).</summary>
+        </member>
+        <member name="P:System.SR.SAMStoreCtxNoComputerPasswordSet">
+            <summary>Computer accounts in this store can not have their passwords reset or changed.</summary>
+        </member>
+        <member name="P:System.SR.SAMStoreCtxNoComputerPasswordExpire">
+            <summary>Computer accounts in this store can not have their passwords expired.</summary>
+        </member>
+        <member name="P:System.SR.SAMStoreCtxCouldntGetSIDForGroupMember">
+            <summary>One of the Principal objects to be inserted into or removed from the group's membership does not contain a SID.</summary>
+        </member>
+        <member name="P:System.SR.SAMStoreCtxFailedToClearGroup">
+            <summary>An error ({0}) occurred while trying to clear the group membership.</summary>
+        </member>
+        <member name="P:System.SR.SAMStoreCtxCantRetrieveObjectSidForCrossStore">
+            <summary>While trying to resolve a cross-store reference, the objectSid could not be retrieved from the representation of the target principal.</summary>
+        </member>
+        <member name="P:System.SR.SAMStoreCtxCantResolveSidForCrossStore">
+            <summary>While trying to resolve a cross-store reference, the SID of the target principal could not be resolved.  The error code is {0}.</summary>
+        </member>
+        <member name="P:System.SR.SAMStoreCtxFailedFindCrossStoreTarget">
+            <summary>While trying to resolve a cross-store reference, the target principal could not be found in the domain indicated by the principal's SID.</summary>
+        </member>
+        <member name="P:System.SR.SAMStoreCtxErrorEnumeratingGroup">
+            <summary>An error ({0}) occurred while enumerating the group membership.  The member's SID could not be resolved.</summary>
+        </member>
+        <member name="P:System.SR.SAMStoreCtxLocalGroupsOnly">
+            <summary>Only local groups are supported by this store.</summary>
+        </member>
+        <member name="P:System.SR.AuthZFailedToRetrieveGroupList">
+            <summary>While trying to retrieve the authorization groups, an error ({0}) occurred.</summary>
+        </member>
+        <member name="P:System.SR.AuthZNotSupported">
+            <summary>Retrieval of authorization groups is not supported by this platform.</summary>
+        </member>
+        <member name="P:System.SR.AuthZErrorEnumeratingGroups">
+            <summary>An error ({0}) occurred while enumerating the groups.  The group's SID could not be resolved.</summary>
+        </member>
+        <member name="P:System.SR.AuthZCantFindGroup">
+            <summary>An error occurred while enumerating the groups.  The group could not be found.</summary>
+        </member>
+        <member name="P:System.SR.ContextOptionsNotValidForMachineStore">
+            <summary>The options value is invalid.  The Machine store only supports Negotiate.</summary>
+        </member>
+        <member name="P:System.SR.PassedContextTypeDoesNotMatchDetectedType">
+            <summary>The supplied context type does not match the server contacted. The server type is {0}.</summary>
+        </member>
+        <member name="P:System.SR.NullArguments">
+            <summary>The supplied arguments cannot be null.</summary>
+        </member>
+        <member name="P:System.SR.InvalidStringValueForStore">
+            <summary>Empty string is not supported by the property {0} for this store type.</summary>
+        </member>
+        <member name="P:System.SR.ServerDown">
+            <summary>The server could not be contacted.</summary>
+        </member>
+        <member name="P:System.SR.InvalidPropertyForStore">
+            <summary>Property is not valid for this store type.</summary>
+        </member>
+        <member name="P:System.SR.NameMustBeSetToPersistPrincipal">
+            <summary>SamAccountName or Name must be assigned to a newly-created Principal object in this store prior to saving.</summary>
+        </member>
+        <member name="P:System.SR.ExtensionInvalidClassDefinitionConstructor">
+            <summary>Extension class must define a constructor that accepts a PrincipalContext argument.</summary>
+        </member>
+        <member name="P:System.SR.ExtensionInvalidClassAttributes">
+            <summary>Extension class must set DirectoryObjectClassAttribute and DirectoryRdnPrefixAttribute.</summary>
+        </member>
+        <member name="P:System.SR.SaveToMustHaveSamecontextType">
+            <summary>The target context must have the same type as the object's current context.</summary>
+        </member>
+        <member name="P:System.SR.ComputerInvalidForAppDirectoryStore">
+            <summary>The ComputerPrincipal object is not supported by the ApplicationDirectory store.</summary>
+        </member>
+        <member name="P:System.SR.SaveToNotSupportedAgainstMachineStore">
+            <summary>Saving to an alternate context is not supported by the Machine store.</summary>
+        </member>
+        <member name="P:System.SR.InvalidContextOptionsForMachine">
+            <summary>The ContextOptions passed are invalid for the Machine store.  Only ContextOptions.Negotiate is supported.</summary>
+        </member>
+        <member name="P:System.SR.InvalidContextOptionsForAD">
+            <summary>The ContextOptions passed are invalid for this store type.  Either Negotiate or SimpleBind must be specified and they cannot be combined.</summary>
+        </member>
+        <member name="P:System.SR.InvalidExtensionCollectionType">
+            <summary>Collections whose elements are another collection cannot be set by ExtensionClasses.</summary>
+        </member>
+        <member name="P:System.SR.ADAMStoreUnableToPopulateSchemaList">
+            <summary>The store is unable to populate a list of bindable object types.  Check access to the Schema container.</summary>
+        </member>
+        <member name="P:System.SR.StoreCtxMultipleFiltersForPropertyUnsupported">
+            <summary>Multiple filters on the property {0} are not supported.</summary>
+        </member>
+        <member name="P:System.SR.AdsiNotInstalled">
+            <summary>Active Directory Client is not installed on this computer.</summary>
+        </member>
+        <member name="P:System.SR.DirectoryServicesAccountManagement_PlatformNotSupported">
+            <summary>System.DirectoryServices.AccountManagement is not supported on this platform.</summary>
+        </member>
+        <member name="T:Interop.BOOL">
+            <summary>
+            Blittable version of Windows BOOL type. It is convenient in situations where
+            manual marshalling is required, or to avoid overhead of regular bool marshalling.
+            </summary>
+            <remarks>
+            Some Windows APIs return arbitrary integer values although the return type is defined
+            as BOOL. It is best to never compare BOOL to TRUE. Always use bResult != BOOL.FALSE
+            or bResult == BOOL.FALSE .
+            </remarks>
+        </member>
+        <member name="T:Interop.BOOLEAN">
+            <summary>
+            Blittable version of Windows BOOLEAN type. It is convenient in situations where
+            manual marshalling is required, or to avoid overhead of regular bool marshalling.
+            </summary>
+            <remarks>
+            Some Windows APIs return arbitrary integer values although the return type is defined
+            as BOOLEAN. It is best to never compare BOOLEAN to TRUE. Always use bResult != BOOLEAN.FALSE
+            or bResult == BOOLEAN.FALSE .
+            </remarks>
+        </member>
+        <member name="T:Interop.OBJECT_ATTRIBUTES">
+            <summary>
+            <a href="https://msdn.microsoft.com/en-us/library/windows/hardware/ff557749.aspx">OBJECT_ATTRIBUTES</a> structure.
+            The OBJECT_ATTRIBUTES structure specifies attributes that can be applied to objects or object handles by routines
+            that create objects and/or return handles to objects.
+            </summary>
+        </member>
+        <member name="F:Interop.OBJECT_ATTRIBUTES.RootDirectory">
+            <summary>
+            Optional handle to root object directory for the given ObjectName.
+            Can be a file system directory or object manager directory.
+            </summary>
+        </member>
+        <member name="F:Interop.OBJECT_ATTRIBUTES.ObjectName">
+            <summary>
+            Name of the object. Must be fully qualified if RootDirectory isn't set.
+            Otherwise is relative to RootDirectory.
+            </summary>
+        </member>
+        <member name="F:Interop.OBJECT_ATTRIBUTES.SecurityDescriptor">
+            <summary>
+            If null, object will receive default security settings.
+            </summary>
+        </member>
+        <member name="F:Interop.OBJECT_ATTRIBUTES.SecurityQualityOfService">
+            <summary>
+            Optional quality of service to be applied to the object. Used to indicate
+            security impersonation level and context tracking mode (dynamic or static).
+            </summary>
+        </member>
+        <member name="M:Interop.OBJECT_ATTRIBUTES.#ctor(Interop.UNICODE_STRING*,Interop.ObjectAttributes,System.IntPtr,Interop.SECURITY_QUALITY_OF_SERVICE*)">
+            <summary>
+            Equivalent of InitializeObjectAttributes macro with the exception that you can directly set SQOS.
+            </summary>
+        </member>
+        <member name="F:Interop.ObjectAttributes.OBJ_INHERIT">
+            <summary>
+            This handle can be inherited by child processes of the current process.
+            </summary>
+        </member>
+        <member name="F:Interop.ObjectAttributes.OBJ_PERMANENT">
+            <summary>
+            This flag only applies to objects that are named within the object manager.
+            By default, such objects are deleted when all open handles to them are closed.
+            If this flag is specified, the object is not deleted when all open handles are closed.
+            </summary>
+        </member>
+        <member name="F:Interop.ObjectAttributes.OBJ_EXCLUSIVE">
+            <summary>
+            Only a single handle can be open for this object.
+            </summary>
+        </member>
+        <member name="F:Interop.ObjectAttributes.OBJ_CASE_INSENSITIVE">
+            <summary>
+            Lookups for this object should be case insensitive.
+            </summary>
+        </member>
+        <member name="F:Interop.ObjectAttributes.OBJ_OPENIF">
+            <summary>
+            Create on existing object should open, not fail with STATUS_OBJECT_NAME_COLLISION.
+            </summary>
+        </member>
+        <member name="F:Interop.ObjectAttributes.OBJ_OPENLINK">
+            <summary>
+            Open the symbolic link, not its target.
+            </summary>
+        </member>
+        <member name="T:Interop.SECURITY_QUALITY_OF_SERVICE">
+            <summary>
+            <a href="https://docs.microsoft.com/en-us/windows/win32/api/winnt/ns-winnt-security_quality_of_service">SECURITY_QUALITY_OF_SERVICE</a> structure.
+             Used to support client impersonation. Client specifies this to a server to allow
+             it to impersonate the client.
+            </summary>
+        </member>
+        <member name="T:Interop.ImpersonationLevel">
+            <summary>
+            <a href="https://msdn.microsoft.com/en-us/library/windows/desktop/aa379572.aspx">SECURITY_IMPERSONATION_LEVEL</a> enumeration values.
+             [SECURITY_IMPERSONATION_LEVEL]
+            </summary>
+        </member>
+        <member name="F:Interop.ImpersonationLevel.Anonymous">
+            <summary>
+             The server process cannot obtain identification information about the client and cannot impersonate the client.
+             [SecurityAnonymous]
+            </summary>
+        </member>
+        <member name="F:Interop.ImpersonationLevel.Identification">
+            <summary>
+             The server process can obtain identification information about the client, but cannot impersonate the client.
+             [SecurityIdentification]
+            </summary>
+        </member>
+        <member name="F:Interop.ImpersonationLevel.Impersonation">
+            <summary>
+             The server process can impersonate the client's security context on it's local system.
+             [SecurityImpersonation]
+            </summary>
+        </member>
+        <member name="F:Interop.ImpersonationLevel.Delegation">
+            <summary>
+             The server process can impersonate the client's security context on remote systems.
+             [SecurityDelegation]
+            </summary>
+        </member>
+        <member name="T:Interop.ContextTrackingMode">
+            <summary>
+            <a href="https://msdn.microsoft.com/en-us/library/cc234317.aspx">SECURITY_CONTEXT_TRACKING_MODE</a>
+            </summary>
+        </member>
+        <member name="F:Interop.ContextTrackingMode.Static">
+            <summary>
+             The server is given a snapshot of the client's security context.
+             [SECURITY_STATIC_TRACKING]
+            </summary>
+        </member>
+        <member name="F:Interop.ContextTrackingMode.Dynamic">
+            <summary>
+             The server is continually updated with changes.
+             [SECURITY_DYNAMIC_TRACKING]
+            </summary>
+        </member>
+        <member name="F:Interop.UNICODE_STRING.Length">
+            <summary>
+            Length in bytes, not including the null terminator, if any.
+            </summary>
+        </member>
+        <member name="F:Interop.UNICODE_STRING.MaximumLength">
+            <summary>
+            Max size of the buffer in bytes
+            </summary>
+        </member>
+        <member name="T:Interop.Advapi32.TOKEN_INFORMATION_CLASS">
+            <summary>
+            <a href="https://msdn.microsoft.com/en-us/library/windows/desktop/aa379626.aspx">TOKEN_INFORMATION_CLASS</a> enumeration.
+            </summary>
+        </member>
+    </members>
+</doc>
