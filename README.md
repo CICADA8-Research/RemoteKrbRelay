@@ -55,10 +55,10 @@ There's also the [SilverPotato](https://decoder.cloud/2024/04/24/hello-im-your-d
 
 # Details
 Now, you have four folders in front of you:
-- Checker - old version of the checker for detecting vulnerable DCOM objects;
-- Checkerv2.0 - new version of the checker for detecting vulnerable DCOM objects;
-- Exploit - RemoteKrbRelay.exe :) 
-- FindAvailablePort - a tool for bypassing a firewall when using an exploit. 
+- `Checker` - old version of the checker for detecting vulnerable DCOM objects;
+- `Checkerv2.0` - new version of the checker for detecting vulnerable DCOM objects;
+- `Exploit` - RemoteKrbRelay.exe :) 
+- `FindAvailablePort` - a tool for bypassing a firewall when using an exploit. 
 
 ## Checker
 So, let's start with Checker. You can use it to detect vulnerable DCOM objects. A vulnerable DCOM object can be considered to be:
@@ -107,7 +107,7 @@ And u will receive such output:
 The columns will contain the DCOM object CLSIDs, names, and LaunchPermission and AccessPermission. 
 ![изображение](https://github.com/CICADA8-Research/RemoteKrbRelay/assets/92790655/4d6d0876-f3ae-453e-9c26-e618f61bc71d)
 
-Try searching for sppui (CLSID {F87B28F1-DA9A-4F35-8EC0-800EFCF26B83}, APPID {0868DC9B-D9A2-4f64-9362-133CEA201299}) and CertSrv Request (CLSID { d99e6e74-fc88-11d0-b498-00a0c90312f3}) objects and understand why they are vulnerable.
+Try searching for sppui (CLSID `{F87B28F1-DA9A-4F35-8EC0-800EFCF26B83}`, APPID `{0868DC9B-D9A2-4f64-9362-133CEA201299}`) and CertSrv Request (CLSID `{d99e6e74-fc88-11d0-b498-00a0c90312f3}`) objects and understand why they are vulnerable.
 
 Don't use Checker, use only Checkerv2.0 pls :3 
 
