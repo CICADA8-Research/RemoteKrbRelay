@@ -268,6 +268,9 @@ Supports cross-session activation using `-session`:
 
 Also LAPS, changing user password, smb....
 
+Video DEMO:
+- [https://youtu.be/1zvycrTTgDU](https://youtu.be/1zvycrTTgDU)
+
 # TO DO LIST
 - [ ] Dump GMSA
 - [ ] Exchange to exchange relay
